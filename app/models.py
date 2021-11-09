@@ -1,29 +1,26 @@
-import os
+from . import db
+from werkzeug.security import generate_password_hash,check_password_hash
+from datetime import datetime
+from flask_login import UserMixin
+from . import login_manager
 
-class Config:
-    SECRET_KEY = os.environ.get('SECRET_KEY')
-    # SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://mugera:Mugbwo9856@localhost/pitches'
-    UPLOADED_PHOTOS_DEST ='app/static/photos'
-    
-    #email configurations
-    MAIL_SERVER = 'smtp.googlemail.com'
-    MAIL_PORT = 587
-    MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get("MAIL_USERNAME")
-    MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    
-class ProdConfig(Config):
-     SQLALCHEMY_DATABASE_URI ="postgresql://anszgkllpxanst:c9d40243a350ba5207e102a94b12ed27bc3f3b5daf8e1e6a1b92d5b50d0e2738@ec2-18-206-20-102.compute-1.amazonaws.com:5432/danjuvprph6nlk?sslmode=require"
 
-class TestConfig(Config):
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://mugera:Mugbwo9856@localhost/pitches_tests'
-    
-class DevConfig(Config):
-    SQLALCHEMY_DATABASE_URI ='postgresql+psycopg2://mugera:Mugbwo9856@localhost/pitches'
-    DEBUG = True
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
 
-config_options = {
-'development':DevConfig,
-'production':ProdConfig,
-'test':TestConfig
-}
+class User(db.Model,UserMixin):
+    __tablename__ = 'users'
+    id = db.Column(db.Integer,primary_key = True)
+    username = db.Column(db.String(255),index=True)
+    email = db.Column(db.String(255),unique=True,index=True)
+    bio = db.Column(db.String(255))
+    pitches = db.relationship('Pitch', backref='user', lazy='dynamic')
+    comments = db.relationship('Comment',backref='user',lazy='dynamic')
+    upvotes = db.relationship('Upvote',backref='user',lazy='dynamic')
+    downvotes = db.relationship('Downvote',backref='user',lazy='dynamic')
+    pass_secure = db.Column(db.String(255))
+    profile_pic_path = db.Column(db.String())
+  
+    
+    
