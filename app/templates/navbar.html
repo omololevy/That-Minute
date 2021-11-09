@@ -1,0 +1,55 @@
+<div class="container-fluid p-0">
+  {% block styles %}
+  <link
+    rel="stylesheet"
+    href="{{url_for('static',filename='css/index.css')}}"/>
+  {% endblock %}
+
+  <div class="navbar m-0">
+    <div class="nav-logo">
+     
+      <a class="navbar-brand" href="/"> The-Minute</a>
+      
+    </div>
+   
+    <div class="nav-links">
+      {% if current_user.is_authenticated %}
+
+      <li>
+        <a href="{{url_for('main.new_pitch')}}" class="nav-link-btn">Add pitch</a >
+
+      <li class="nav-item dropdown">
+        <a class="nav-link-btn dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false">
+
+          {{current_user.username | capitalize()}}
+
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <li>
+            <a class="nav-link" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
+          </li>
+          </ul>
+          <li>
+           
+            <a class="nav-link-btn " href="{{url_for('auth.logout')}}">Sign out</a>
+          </li>
+          {% else %}
+          <li>
+             <a class="nav-link-btn" href="{{url_for('auth.login')}}">Sign in</a>
+          </li>
+          {%endif%}
+        
+       
+      </li>
+      
+      </li>
+    </div>
+  </div>
+</div>
+
+
