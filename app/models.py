@@ -39,3 +39,28 @@ class User(db.Model,UserMixin):
         return f'User {self.username}'
     
     
+class Pitch(db.Model):
+    __tablename__ = 'pitches'
+    id = db.Column(db.Integer,primary_key = True)
+    title = db.Column(db.String(255))
+    pitch = db.Column(db.String(255))
+    time = db.Column(db.DateTime, default = datetime.utcnow)
+    category = db.Column(db.String(255))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='SET NULL'),nullable = True)
+    comments = db.relationship('Comment',backref='pitch',lazy='dynamic')
+    upvotes = db.relationship('Upvote',backref='pitch',lazy='dynamic')
+    downvotes = db.relationship('Downvote',backref='pitch',lazy='dynamic')
+    
+    def save_pitch(self):
+        db.session.add(self)
+        db.session.commit()
+       
+    @classmethod
+    def get_pitches(cls,pitch_category):
+        pitches = Pitch.query.filter_by(category=pitch_category).all()
+        return pitches
+  
+    def __repr__(self):
+        return f'Pitch {self.pitch}'
+    
+    
