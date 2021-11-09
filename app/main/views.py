@@ -15,13 +15,11 @@ def index():
 @main.route('/filter/<int:pitch_query>')
 def filter(pitch_query):  
     categories = {"1":"Interview","2":"Advertisement","3":"Humour","4":"Pickup_lines"}
-    
-        
+           
     filtered_pitches_list = Pitch.get_pitches(categories.get(str(pitch_query)))
     print(filtered_pitches_list)
       
     return render_template('filter_pitch.html',pitches_list=filtered_pitches_list)
-
 
 @main.route('/new_pitch',methods= ['GET','POST'])
 @login_required
@@ -92,8 +90,6 @@ def upvote_pitch(pitch_id,user_id):
         print("Added new upvote")
        
     return redirect(url_for("main.index"))
-        
-        
 
 @main.route('/downvote_pitch/<int:user_id>/<int:pitch_id>')
 @login_required
@@ -131,5 +127,13 @@ def downvote_pitch(pitch_id,user_id):
     return redirect(url_for("main.index"))
         
       
+@main.route('/user/<uname>')
+def profile(uname):
+    user = User.query.filter_by(username = uname).first()
+    posts = Pitch.query.filter_by(user_id =current_user._get_current_object().id ).all()
 
+    if user is None:
+        abort(404)
+
+    return render_template("profile/profile.html", user = user,posts=posts)
 
