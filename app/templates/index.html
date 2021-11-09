@@ -1,0 +1,29 @@
+{% extends 'base.html'%} 
+{% import 'macros.html' as macro%} 
+{% block styles%} 
+{{ super() }}
+  <link rel="stylesheet" href="{{url_for('static',filename='/css/index.css')}}" />
+  {% endblock %}
+  
+  {%block content%}
+  <div class="main-container container-fluid">
+    <div class="btn-group">
+      <a class="btn-link" href="/">All</a>
+      <a class="btn-link" href="{{url_for('main.filter',pitch_query=1)}}"
+        >Interview</a
+      >
+      <a class="btn-link" href="{{url_for('main.filter',pitch_query=2)}}"
+        >Advertisement</a
+      >
+      <a class="btn-link" href="{{url_for('main.filter',pitch_query=3)}}"
+        >Humour</a
+      >
+      <a class="btn-link" href="{{url_for('main.filter',pitch_query=4)}}"
+        >Pickup_lines</a
+      >
+    </div>
+  
+    <div class="row">{{ macro.displayPitchList(pitches_list)}}</div>
+  </div>
+  {%endblock%}
+  
