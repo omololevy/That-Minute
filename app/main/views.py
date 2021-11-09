@@ -58,3 +58,78 @@ def add_comment(pitch_id):
     return render_template('comments.html',form=form,comments_list=comments_list,pitch=pitch)
 
 
+@main.route('/upvote_pitch/<int:user_id>/<int:pitch_id>')
+@login_required
+def upvote_pitch(pitch_id,user_id):
+    upvote = Upvote.query.filter_by(user_id =current_user._get_current_object().id).first()
+   
+    print(pitch_id)
+    if upvote:
+        pitch_id = pitch_id
+       
+        if upvote.user_id == current_user._get_current_object().id and upvote.pitch_id == pitch_id :         
+            print("upvote already exists")
+            return redirect(url_for("main.index"))
+        elif  upvote.pitch_id == pitch_id  and db.session.query(Upvote.id).filter_by(user_id=current_user._get_current_object().id) is not None   :
+            print("upvote already exists")
+            return redirect(url_for("main.index")) 
+        else:
+            print(pitch_id)
+            pitch_id = pitch_id
+            user_id = current_user._get_current_object().id
+            upvote_count = 1
+            new_upvote = Upvote(upvote_count=upvote_count,user_id = user_id,pitch_id = pitch_id)
+            new_upvote.add_upvote()
+            print("Added new upvote")
+            return redirect(url_for("main.index"))
+
+    else:
+        pitch_id = pitch_id
+        user_id = current_user._get_current_object().id
+        upvote_count = 1
+        new_upvote = Upvote(upvote_count=upvote_count,user_id = user_id,pitch_id = pitch_id)
+        new_upvote.add_upvote()
+        print("Added new upvote")
+       
+    return redirect(url_for("main.index"))
+        
+        
+
+@main.route('/downvote_pitch/<int:user_id>/<int:pitch_id>')
+@login_required
+def downvote_pitch(pitch_id,user_id):
+    downvote = Downvote.query.filter_by(user_id =current_user._get_current_object().id).first()
+   
+    print(pitch_id)
+    if downvote:
+        pitch_id = pitch_id
+      
+        if downvote.user_id == current_user._get_current_object().id and downvote.pitch_id == pitch_id :         
+            print("downvote already exists")
+            return redirect(url_for("main.index"))
+        elif  downvote.pitch_id == pitch_id  and db.session.query(Downvote.id).filter_by(user_id=current_user._get_current_object().id) is not None   :
+            print("downvote already exists")
+            return redirect(url_for("main.index")) 
+        else:
+            print(pitch_id)
+            pitch_id = pitch_id
+            user_id = current_user._get_current_object().id
+            downvote_count = 1
+            new_downvote = Downvote(downvote_count=downvote_count,user_id = user_id,pitch_id = pitch_id)
+            new_downvote.add_downvote()
+            print("Added new downvote")
+            return redirect(url_for("main.index"))
+   
+    else:
+        pitch_id = pitch_id
+        user_id = current_user._get_current_object().id
+        downvote_count = 1
+        new_downvote = Downvote(downvote_count=downvote_count,user_id = user_id,pitch_id = pitch_id)
+        new_downvote.add_downvote()
+        print("Added new downvote")
+       
+    return redirect(url_for("main.index"))
+        
+      
+
+
