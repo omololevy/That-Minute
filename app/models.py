@@ -84,3 +84,39 @@ class Comment(db.Model):
     def __repr__(self):
         return f'Comment {self.pitch}'
 
+class Upvote(db.Model):
+    __tablename__ = 'upvotes'
+    id = id = db.Column(db.Integer,primary_key = True,unique=True)
+    upvote_count=  db.Column(db.Integer, default=0)
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id',ondelete='SET NULL'),nullable = True) 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='SET NULL'),nullable = True)
+    
+    def add_upvote(self):
+        if self not in db.session:
+            db.session.add(self)
+            db.session.commit()         
+    @classmethod
+    def get_upvote(cls,pitch_id):
+        upvote = Upvote.query.filter_by(pitch_id=pitch_id).first()
+        return upvote.upvote_count
+    def __repr__(self):
+        return f'Upvote {self.pitch}'
+    
+class Downvote(db.Model):
+    __tablename__ = 'downvotes'
+    id = id = db.Column(db.Integer,primary_key = True,unique=True)
+    downvote_count=  db.Column(db.Integer, default=0)
+    pitch_id = db.Column(db.Integer,db.ForeignKey('pitches.id',ondelete='SET NULL'),nullable = True) 
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id',ondelete='SET NULL'),nullable = True)
+    
+    def add_downvote(self):
+        if self not in db.session:
+            db.session.add(self)
+            db.session.commit()         
+    @classmethod
+    def get_downvote(cls,pitch_id):
+        downvote = Downvote.query.filter_by(pitch_id=pitch_id).first()
+        return downvote.downvote_count
+    def __repr__(self):
+        return f'Downvote {self.pitch}'
+    
