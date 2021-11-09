@@ -1,0 +1,104 @@
+{% macro displayPitchList(pitches_list)%} 
+{%if not pitches_list%}
+
+<h3 class="text-center text-white mt-3">
+  Welcome. Currently there are no pitches in this category.
+</h3>
+<a class="nav-link text-center mt-1" href="{{url_for('main.new_pitch')}}"  >Add Pitch</a>
+
+{%else%} 
+{% for pitch in pitches_list%}
+<div class="col-md-4">
+  <div class="card m-2">
+    <div class="card-body">
+      <div class="title-wrapper">
+        <h5 class="pitch-title">
+          <span>Title:</span>
+          {{pitch.title}}
+        </h5>
+        <h5 class="pitch-category"><span>Category:</span>{{pitch.category}}</h5>
+      </div>
+      <div class="pitch-wrapper">
+        <p class="card-text m-0 p-0">{{pitch.pitch}}</p>
+        <div class="author">
+          <span>{{pitch.user.username}}</span>
+        </div>
+      </div>
+
+      <div class="pitch-actions">
+        <div class="pitch-details">
+          <div class="comments">comments : {{pitch.comments.count()}}</div>
+          <div>
+            <a
+              href="{{url_for('main.upvote_pitch',pitch_id=pitch.id,user_id=pitch.user.id)}}"
+              class="fa fa-thumbs-up fa-1x text-success"
+            ></a>
+
+            <span>{{pitch.upvotes.count()}}</span>
+          </div>
+          <div>
+            <a
+              href="{{url_for('main.downvote_pitch',pitch_id=pitch.id,user_id=pitch.user.id)}}"
+              class="fa fa-thumbs-down fa-1x text-danger"
+            ></a>
+
+            <span>{{pitch.downvotes.count()}}</span>
+          </div>
+        </div>
+
+        <div>
+          <a href="{{url_for('main.add_comment',pitch_id=pitch.id)}}" class="nav-link-btn mb-4">
+            Add Comment</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endfor %} 
+
+{%endif%} 
+
+{% endmacro %}
+
+<!-- comments -->
+{% macro displayPitchCommentsList(comments_list)%} 
+
+{% for comment in comments_list%}
+
+<div class="card m-2">
+  <div class="card-body">
+    <p class="card-text">{{comment.comment}}</p>
+    <div>
+      <span class="author">{{comment.user.username}}</span>
+    </div>
+  </div>
+</div>
+
+{% endfor %} 
+
+{% endmacro %}
+
+<!-- user posts -->
+
+{% macro displayUserPost(posts)%} 
+{% for post in posts%}
+
+<div class="card m-3 p-3">
+  <div class="title-wrapper">
+    <h5 class="pitch-title">Title: {{post.title}}</h5>
+    <h5 class="pitch-category">Category: {{post.category}}</h5>
+  </div>
+  <div class="post-wrapper">
+    <p class="card-text m-0 p-0">{{post.pitch}}</p>
+    <h6 class="post-date">Posted on {{post.time.date()}}</h6>
+  </div>
+  <div class="post-details mt-2">
+    <div class="comments">comments : {{post.comments.count()}}</div>
+    <a href="{{url_for('main.add_comment',pitch_id=post.id)}}" class="link-btn">View Comments</a>
+  </div>
+</div>
+
+{% endfor %} 
+
+{% endmacro %}
