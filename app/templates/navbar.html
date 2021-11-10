@@ -9,6 +9,11 @@
     <div class="nav-logo">
       <img src="../static/photos/logo.png" alt="" height="40"/>
       <a class="navbar-brand" href="/"> The-Minute</a>
+      <a class="nav-link-btn" href="/">All</a>
+      <a class="nav-link-btn" href="{{url_for('main.filter',pitch_query=1)}}">Interview</a>
+      <a class="nav-link-btn" href="{{url_for('main.filter',pitch_query=2)}}">Advertisement</a>
+      <a class="nav-link-btn" href="{{url_for('main.filter',pitch_query=3)}}">Humour</a>
+      <a class="nav-link-btn" href="{{url_for('main.filter',pitch_query=4)}}">Pickup_lines</a>
       
     </div>
    
@@ -19,16 +24,10 @@
         <a href="{{url_for('main.new_pitch')}}" class="nav-link-btn">Add pitch</a >
 
       <li class="nav-item dropdown">
-        <a class="nav-link-btn dropdown-toggle"
-          href="#"
-          id="navbarDropdown"
-          role="button"
-          data-bs-toggle="dropdown"
-          aria-expanded="false">
-
+        <a class="nav-link-btn dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
           {{current_user.username | capitalize()}}
-
         </a>
+        
         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
           <li>
             <a class="nav-link" href="{{url_for('main.profile',uname=current_user.username)}}">Profile</a>
@@ -43,8 +42,6 @@
              <a class="nav-link-btn" href="{{url_for('auth.login')}}">Sign in</a>
           </li>
           {%endif%}
-        
-       
       </li>
       
       </li>
