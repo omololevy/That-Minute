@@ -1,0 +1,60 @@
+{% extends 'base.html'%} 
+{% import 'macros.html' as macro%} 
+{% block content %}
+<div class="container-fluid">
+  <div class="row profile-wrapper">
+    <div class="col-md-6 profile-container">
+      <div class="">
+        <div class="user_details_container row">
+          <div class="user_profile_picture col-md-7">
+            {% if user.profile_pic_path %}
+            <img src="{{url_for('static',filename=user.profile_pic_path)}}" alt="" class="img-thumbnail"/>
+            {%else%}
+            <p class="text-white">Add profile picture</p>
+            {% endif %}
+          </div>
+          <div class="user_details_bio col-md-5">
+            <label>Name </label>
+            <h3 class="text-white user_name">{{user.username| capitalize}}</h3>
+
+            {% if user.bio %}
+            <label>About </label>
+            <p class="text-white user_bio">{{user.bio}}</p>
+            {%else%}
+            <p class="text-white message">
+              "" Update your bio, tell us more about you ""
+            </p>
+            {% endif %}
+
+            <div class="user_edit_profile">
+              {% if user == current_user %}
+              <a class="btn btn-success" href="{{url_for('main.update_profile',uname=user.username)}}" >Edit profile</a>
+              {% endif %}
+            </div>
+          </div>
+        </div>
+
+        <!-- form -->
+        <div class="user-actions">
+          <div class="picture-form">
+            {% if user == current_user %}
+            <form action="{{url_for('main.update_pic',uname=user.username)}}" method="post" enctype="multipart/form-data">
+              <input type="file" name="photo" class="form-control choose-input" required/>
+              <button class="btn btn-success" type="submit">Add</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 posts-container">
+      <label>Pitches</label>
+      <h3 class="text-white user-bio mb-1">
+        Posted Pitches: {{user.pitches.count()}}
+      </h3>
+
+      <div class="posts">{{macro.displayUserPost(posts)}}</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
