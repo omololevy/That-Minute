@@ -8,8 +8,8 @@
       <!--Flash message -->
       {% for message in get_flashed_messages() %}
       <div class="alert alert-danger">
-        <button type="button" class="close btn btn-danger" data-dismiss="alert">
-          &times;
+        <button type="button" class="close btn btn-danger" data-dismiss="alert"><a href="/">
+          &times;</a>
         </button>
         {{ message }}
       </div>
