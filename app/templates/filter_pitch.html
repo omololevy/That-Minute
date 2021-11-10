@@ -7,22 +7,7 @@
   
   {%block content%}
   <div class="main-container container-fluid">
-    <div class="btn-group">
-      <a class="btn-link" href="/">All</a>
-      <a class="btn-link" href="{{url_for('main.filter',pitch_query=1)}}"
-        >Interview</a
-      >
-      <a class="btn-link" href="{{url_for('main.filter',pitch_query=2)}}"
-        >Advertisement</a
-      >
-      <a class="btn-link" href="{{url_for('main.filter',pitch_query=3)}}"
-        >Humour</a
-      >
-      <a class="btn-link" href="{{url_for('main.filter',pitch_query=4)}}"
-        >Pickup_lines</a
-      >
-    </div>
-  
+    
     <div class="row">
       {{ macro.displayPitchList(pitches_list)}}
     </div>
