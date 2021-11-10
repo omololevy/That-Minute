@@ -1,0 +1,10 @@
+Hello {{user.username}},
+
+Welcome to That-Minute site. A platform that aims to bring change on how we view reality.
+We have seen you join this amazing family. Feel at home as you go through the pitches.
+You wish to upvote, downvote or comment on a pitch? Go right ahead! Add even your own.
+
+Best Regards.
+
+Levy Omolo,
+The Developer.
