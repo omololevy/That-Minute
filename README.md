@@ -1,5 +1,6 @@
 # That-Minute
-#### This is a project on a python language to implement the a one minute life-changing pitch.
+#### This is a project on a python language to implement the a one minute life-changing pitch. A kind of life changing quotes.
+
 
  
  ***Tuesday November 9 2021*** 
@@ -7,7 +8,7 @@
 
 
 ## Project Description
-This is an application that will help the user with a list of pitches. In life, we only have 60 seconds to impress someone. 1 minute can make or break us.
+This is an application that will help the user with a list of pitches. In life, we only have 60 seconds to impress someone. 1 minute can make or break anyone.
 </br>
 
 With this app, a user is able to:
@@ -22,12 +23,12 @@ With this app, a user is able to:
 
 ## Project live sites
   * This is the live [link to the repo ](https://github.com/omololevy/That-Minute) <br>
-  * This is the live [link to the app ](https://trenews.herokuapp.com/)
+  * This is the live [link to the app ](https://thatminute.herokuapp.com/)
 
 
 ## Homepage Demo
 The app looks like this: 
-  ![Image](./app/static/images/demo.png)
+  ![Image](./app/static/photos/demo.png)
 
 ## Setup instructions
 * Create a virtual environment in your project directory through the terminal with the command: <br>
@@ -100,6 +101,19 @@ The app looks like this:
     |-requirements.txt
     |-start.sh
 ~~~
+## Deployment
+* ```$ heroku login```
+* ```$ heroku create <name-of-app>```
+* ```$ heroku config:set MAIL_USERNAME=<YOUR EMAIL ADDRESS>```
+* ```$ heroku config:set MAIL_PASSWORD=<YOUR EMAIL PASSWORD>```
+* ```$ heroku addons:create heroku-postgresql```
+* ```$ git push heroku master```
+
+## Database Migration
+* ```$ heroku run python3.9 manage.py db stamp head```
+* ```$ heroku run python3.9 manage.py db migrate```
+* ```$ heroku run python3.9 manage.py db upgrade```
+
 ## Technologies Used
 * Python
 * HTML
